@@ -12,6 +12,8 @@ ilgili kategoride filtreleme yapılmayacaktır. Filtreleme sonuçları "Çıktı
 sekmesinde gözükecektir. Metin üzerinde düzenleme yapabilir, sonrasında da
 metni .txt uzantısıyla kaydedebilirsiniz.
 
+Yaş filtrelerken "-" sembolü ile boşluk bırakmadan bir yaş aralığı girebilirsiniz.
+
 ### Ekle/Çıkar
 
 Bu sekmede ilgili bilgileri girerek kişileri ekleyebilirsiniz. Bir kişi eklemek

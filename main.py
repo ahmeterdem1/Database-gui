@@ -436,7 +436,6 @@ class Widget(QWidget):
         return text
 
     def filtrele(self):
-        text = ""
         self.criterias[0] = self.tc.text().lower()
         self.criterias[1] = self.isim.text().lower()
         self.criterias[2] = self.soyisim.text().lower()
@@ -448,10 +447,19 @@ class Widget(QWidget):
         self.criterias[8] = str(self.özel_durum.currentIndex())
         self.criterias[9] = str(self.ihtiyaç_seviyesi.currentIndex())
         self.criterias[10] = str(self.yardım.currentIndex())
-        temp = self.data.copy()[1:]
+        temp = list()
+        for k in range(1, len(self.data)):
+            temp.append(self.data[k].copy())
         for k in range(11):
             if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0" or self.criterias[k] == "*":
                 continue
+            elif k == 3 and "-" in self.criterias[3]:
+                try:
+                    field = self.criterias[3].split("-")
+                    field = list(range(int(field[0]), int(field[1]) + 1))
+                    temp = list(filter(lambda x: int(x[k]) in field, temp))
+                except:
+                    res = QMessageBox.information(self, "Hata!", "Yaş girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
             elif k == 6 and self.criterias[k] == "1":
                 temp = list(filter(lambda x: self.criterias[k] == x[k], temp))
             else:
@@ -466,8 +474,8 @@ class Widget(QWidget):
         self.özel_durum.setCurrentIndex(0)
         self.ihtiyaç_seviyesi.setCurrentIndex(0)
         self.yardım.setCurrentIndex(0)
-        self.result = temp
-        self.sonuç.setText(self.replacer(temp))
+        self.result = temp.copy()
+        self.sonuç.setText(self.replacer(temp.copy()))
 
     def filtrele2(self):
         self.criterias[0] = self.tc_ekle.text().lower()
@@ -481,10 +489,20 @@ class Widget(QWidget):
         self.criterias[8] = str(self.özel_durum_ekle.currentIndex())
         self.criterias[9] = str(self.ihtiyaç_seviyesi_ekle.currentIndex())
         self.criterias[10] = str(self.yardım_ekle.currentIndex())
-        temp = self.data.copy()[1:]
+        temp = list()
+        for k in range(1, len(self.data)):
+            temp.append(self.data[k].copy())
+
         for k in range(11):
             if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0":
                 continue
+            elif k == 3 and "-" in self.criterias[3]:
+                try:
+                    field = self.criterias[3].split("-")
+                    field = list(range(int(field[0]), int(field[1]) + 1))
+                    temp = list(filter(lambda x: int(x[k]) in field, temp))
+                except:
+                    res = QMessageBox.information(self, "Hata!", "Yaş girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
             elif k == 6 and self.criterias[k] == "1":
                 temp = list(filter(lambda x: self.criterias[k] == x[k], temp))
             else:
@@ -499,7 +517,7 @@ class Widget(QWidget):
         self.özel_durum_ekle.setCurrentIndex(0)
         self.ihtiyaç_seviyesi_ekle.setCurrentIndex(0)
         self.yardım_ekle.setCurrentIndex(0)
-        self.result = temp
+        self.result = temp.copy()
 
 
     def ekle(self):
@@ -535,7 +553,6 @@ class Widget(QWidget):
 
     def çıkar(self):
         self.filtrele2()
-        print(self.result)
         res = QMessageBox.question(self, "Sil", f"Bulunan {len(self.result)} kişiyi silmek istediğinizden emin misiniz?",
                                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if res == QMessageBox.StandardButton.Yes:

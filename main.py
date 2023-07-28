@@ -10,7 +10,7 @@ class Widget(QWidget):
         self.criterias = [None] * 11
         self.result = list()
         self.genelBölge = {"1": "Bölge 1", "2": "Bölge 2", "3": "Bölge 3", "4": "Bölge 4", "5": "Bölge 5", "6": "Bölge 6", "7": "Bölge 7",
-                           "8": "Bölge 8", "9": "Bölge 9", "10": "Bölge 10"}
+                           "8": "Bölge 8", "9": "Bölge 9", "10": "Bölge 10", "11": "Bölge 11"}
         self.ihtiyaçSınıfı = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört", "5": "Beş", "6": "Altı", "7": "Yedi"}
         self.özelDurum = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört"}
         self.ihtiyaçSeviyesi = {"1": "En düşük", "2": "Düşük", "3": "Orta", "4": "Yüksek", "5": "En yüksek"}
@@ -115,6 +115,7 @@ class Widget(QWidget):
         self.genel_bölge.addItem("Bölge 8")
         self.genel_bölge.addItem("Bölge 9")
         self.genel_bölge.addItem("Bölge 10")
+        self.genel_bölge.addItem("Bölge 11")
         genel_bölge.addWidget(genel_bölge1)
         genel_bölge.addWidget(genel_bölge2)
         genel_bölge_widget.setLayout(genel_bölge)
@@ -300,6 +301,7 @@ class Widget(QWidget):
         self.genel_bölge_ekle.addItem("Bölge 8")
         self.genel_bölge_ekle.addItem("Bölge 9")
         self.genel_bölge_ekle.addItem("Bölge 10")
+        self.genel_bölge_ekle.addItem("Bölge 11")
         genel_bölge_ekle.addWidget(genel_bölge1_ekle)
         genel_bölge_ekle.addWidget(genel_bölge2_ekle)
         genel_bölge_ekle_widget.setLayout(genel_bölge_ekle)
@@ -483,6 +485,8 @@ class Widget(QWidget):
         for k in range(11):
             if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0":
                 continue
+            elif k == 6 and self.criterias[k] == "1":
+                temp = list(filter(lambda x: self.criterias[k] == x[k], temp))
             else:
                 temp = list(filter(lambda x: self.criterias[k] in x[k], temp))
         self.tc_ekle.setText("")

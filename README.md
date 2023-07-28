@@ -12,7 +12,7 @@ ilgili kategoride filtreleme yapılmayacaktır. Filtreleme sonuçları "Çıktı
 sekmesinde gözükecektir. Metin üzerinde düzenleme yapabilir, sonrasında da
 metni .txt uzantısıyla kaydedebilirsiniz.
 
-Yaş ve aile filtrelerken "-" sembolü ile boşluk bırakmadan bir yaş aralığı 
+Yaş ve aile filtrelerken "-" sembolü ile boşluk bırakmadan bir aralık 
 girebilirsiniz.
 
 ### Ekle/Çıkar

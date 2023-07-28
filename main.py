@@ -11,6 +11,12 @@ class Widget(QWidget):
         self.data = 0
         self.criterias = [None] * 11
         self.result = list()
+        self.genelBölge = {"1": "Bölge 1", "2": "Bölge 2", "3": "Bölge 3", "4": "Bölge 4", "5": "Bölge 5", "6": "Bölge 6", "7": "Bölge 7",
+                           "8": "Bölge 8", "9": "Bölge 9", "10": "Bölge 10"}
+        self.ihtiyaçSınıfı = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört", "5": "Beş", "6": "Altı", "7": "Yedi"}
+        self.özelDurum = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört"}
+        self.ihtiyaçSeviyesi = {"1": "En düşük", "2": "Düşük", "3": "Orta", "4": "Yüksek", "5": "En yüksek"}
+        self.yardımAlma = {"1": "Yardım alıyor", "2": "Yardım almıyor"}
         with open("database.csv", "r") as file:
             self.data = list(csv.reader(file))
 
@@ -101,16 +107,16 @@ class Widget(QWidget):
         genel_bölge2 = QComboBox(self)
         self.genel_bölge = genel_bölge2
         self.genel_bölge.addItem("Hiçbiri")
-        self.genel_bölge.addItem("1")
-        self.genel_bölge.addItem("2")
-        self.genel_bölge.addItem("3")
-        self.genel_bölge.addItem("4")
-        self.genel_bölge.addItem("5")
-        self.genel_bölge.addItem("6")
-        self.genel_bölge.addItem("7")
-        self.genel_bölge.addItem("8")
-        self.genel_bölge.addItem("9")
-        self.genel_bölge.addItem("10")
+        self.genel_bölge.addItem("Bölge 1")
+        self.genel_bölge.addItem("Bölge 2")
+        self.genel_bölge.addItem("Bölge 3")
+        self.genel_bölge.addItem("Bölge 4")
+        self.genel_bölge.addItem("Bölge 5")
+        self.genel_bölge.addItem("Bölge 6")
+        self.genel_bölge.addItem("Bölge 7")
+        self.genel_bölge.addItem("Bölge 8")
+        self.genel_bölge.addItem("Bölge 9")
+        self.genel_bölge.addItem("Bölge 10")
         genel_bölge.addWidget(genel_bölge1)
         genel_bölge.addWidget(genel_bölge2)
         genel_bölge_widget.setLayout(genel_bölge)
@@ -159,11 +165,11 @@ class Widget(QWidget):
         ihtiyaç_seviyesi2 = QComboBox(self)
         self.ihtiyaç_seviyesi = ihtiyaç_seviyesi2
         self.ihtiyaç_seviyesi.addItem("Hiçbiri")
-        self.ihtiyaç_seviyesi.addItem("1")
-        self.ihtiyaç_seviyesi.addItem("2")
-        self.ihtiyaç_seviyesi.addItem("3")
-        self.ihtiyaç_seviyesi.addItem("4")
-        self.ihtiyaç_seviyesi.addItem("5")
+        self.ihtiyaç_seviyesi.addItem("En düşük")
+        self.ihtiyaç_seviyesi.addItem("Düşük")
+        self.ihtiyaç_seviyesi.addItem("Orta")
+        self.ihtiyaç_seviyesi.addItem("Yüksek")
+        self.ihtiyaç_seviyesi.addItem("En yüksek")
         ihtiyaç_seviyesi.addWidget(ihtiyaç_seviyesi1)
         ihtiyaç_seviyesi.addWidget(ihtiyaç_seviyesi2)
         ihtiyaç_seviyesi_widget.setLayout(ihtiyaç_seviyesi)
@@ -286,16 +292,16 @@ class Widget(QWidget):
         genel_bölge2_ekle = QComboBox(self)
         self.genel_bölge_ekle = genel_bölge2_ekle
         self.genel_bölge_ekle.addItem("Hiçbiri")
-        self.genel_bölge_ekle.addItem("1")
-        self.genel_bölge_ekle.addItem("2")
-        self.genel_bölge_ekle.addItem("3")
-        self.genel_bölge_ekle.addItem("4")
-        self.genel_bölge_ekle.addItem("5")
-        self.genel_bölge_ekle.addItem("6")
-        self.genel_bölge_ekle.addItem("7")
-        self.genel_bölge_ekle.addItem("8")
-        self.genel_bölge_ekle.addItem("9")
-        self.genel_bölge_ekle.addItem("10")
+        self.genel_bölge_ekle.addItem("Bölge 1")
+        self.genel_bölge_ekle.addItem("Bölge 2")
+        self.genel_bölge_ekle.addItem("Bölge 3")
+        self.genel_bölge_ekle.addItem("Bölge 4")
+        self.genel_bölge_ekle.addItem("Bölge 5")
+        self.genel_bölge_ekle.addItem("Bölge 6")
+        self.genel_bölge_ekle.addItem("Bölge 7")
+        self.genel_bölge_ekle.addItem("Bölge 8")
+        self.genel_bölge_ekle.addItem("Bölge 9")
+        self.genel_bölge_ekle.addItem("Bölge 10")
         genel_bölge_ekle.addWidget(genel_bölge1_ekle)
         genel_bölge_ekle.addWidget(genel_bölge2_ekle)
         genel_bölge_ekle_widget.setLayout(genel_bölge_ekle)
@@ -344,11 +350,11 @@ class Widget(QWidget):
         ihtiyaç_seviyesi2_ekle = QComboBox(self)
         self.ihtiyaç_seviyesi_ekle = ihtiyaç_seviyesi2_ekle
         self.ihtiyaç_seviyesi_ekle.addItem("Hiçbiri")
-        self.ihtiyaç_seviyesi_ekle.addItem("1")
-        self.ihtiyaç_seviyesi_ekle.addItem("2")
-        self.ihtiyaç_seviyesi_ekle.addItem("3")
-        self.ihtiyaç_seviyesi_ekle.addItem("4")
-        self.ihtiyaç_seviyesi_ekle.addItem("5")
+        self.ihtiyaç_seviyesi_ekle.addItem("En düşük")
+        self.ihtiyaç_seviyesi_ekle.addItem("Düşük")
+        self.ihtiyaç_seviyesi_ekle.addItem("Orta")
+        self.ihtiyaç_seviyesi_ekle.addItem("Yüksek")
+        self.ihtiyaç_seviyesi_ekle.addItem("En yüksek")
         ihtiyaç_seviyesi_ekle.addWidget(ihtiyaç_seviyesi1_ekle)
         ihtiyaç_seviyesi_ekle.addWidget(ihtiyaç_seviyesi2_ekle)
         ihtiyaç_seviyesi_ekle_widget.setLayout(ihtiyaç_seviyesi_ekle)
@@ -398,6 +404,9 @@ class Widget(QWidget):
         self.sonuç = QTextEdit()
         self.kaydet = QPushButton("Kaydet")
         self.kaydet.clicked.connect(self.out)
+        sonuç_layout.addWidget(self.sonuç)
+        sonuç_layout.addWidget(self.kaydet)
+        sonuç.setLayout(sonuç_layout)
 
 
 
@@ -405,12 +414,29 @@ class Widget(QWidget):
 
         tabs.addTab(filtrele, "Filtrele")
         tabs.addTab(ekle, "Ekle/Çıkar")
+        tabs.addTab(sonuç, "Çıktı")
         general_layout.addWidget(tabs)
         self.setLayout(general_layout)
 
 
     #slot
+
+    def replacer(self, liste: list):
+        text = ""
+        for k in liste:
+            k[1] = k[1].upper()
+            k[2] = k[2].upper()
+            k[6] = self.genelBölge[k[6]]
+            k[7] = self.ihtiyaçSınıfı[k[7]]
+            k[8] = self.özelDurum[k[8]]
+            k[9] = self.ihtiyaçSeviyesi[k[9]]
+            k[10] = self.yardımAlma[k[10]]
+            add = " ".join(k)
+            text += (add + "\n")
+        return text
+
     def filtrele(self):
+        text = ""
         self.criterias[0] = self.tc.text().lower()
         self.criterias[1] = self.isim.text().lower()
         self.criterias[2] = self.soyisim.text().lower()
@@ -424,8 +450,10 @@ class Widget(QWidget):
         self.criterias[10] = str(self.yardım.currentIndex())
         temp = self.data.copy()[1:]
         for k in range(11):
-            if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0":
+            if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0" or self.criterias[k] == "*":
                 continue
+            elif k == 6 and self.criterias[k] == "1":
+                temp = list(filter(lambda x: self.criterias[k] == x[k], temp))
             else:
                 temp = list(filter(lambda x: self.criterias[k] in x[k], temp))
         self.tc.setText("")
@@ -440,6 +468,7 @@ class Widget(QWidget):
         self.yardım.setCurrentIndex(0)
         print(temp)
         self.result = temp
+        self.sonuç.setText(self.replacer(temp))
 
     def filtrele2(self):
         self.criterias[0] = self.tc_ekle.text().lower()

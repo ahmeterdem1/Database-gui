@@ -1,8 +1,6 @@
 import csv, sys, time
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QSlider, QLabel, QStyle, QWidget, \
+from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QWidget, \
     QVBoxLayout, QMessageBox, QTabWidget, QComboBox, QHBoxLayout, QLineEdit, QTextEdit
-from PySide6.QtCore import QRect, QPoint, Qt, QTime, QSize
-from PySide6.QtGui import QScreen
 
 class Widget(QWidget):
 
@@ -466,7 +464,6 @@ class Widget(QWidget):
         self.özel_durum.setCurrentIndex(0)
         self.ihtiyaç_seviyesi.setCurrentIndex(0)
         self.yardım.setCurrentIndex(0)
-        print(temp)
         self.result = temp
         self.sonuç.setText(self.replacer(temp))
 
@@ -498,7 +495,6 @@ class Widget(QWidget):
         self.özel_durum_ekle.setCurrentIndex(0)
         self.ihtiyaç_seviyesi_ekle.setCurrentIndex(0)
         self.yardım_ekle.setCurrentIndex(0)
-        print(temp)
         self.result = temp
 
 

@@ -7,7 +7,7 @@ class Widget(QWidget):
     def __init__(self):
         super().__init__()
         self.data = 0
-        self.criterias = [None] * 11
+        self.criterias = [None] * 12
         self.result = list()
         self.genelBölge = {"1": "Bölge 1", "2": "Bölge 2", "3": "Bölge 3", "4": "Bölge 4", "5": "Bölge 5", "6": "Bölge 6", "7": "Bölge 7",
                            "8": "Bölge 8", "9": "Bölge 9", "10": "Bölge 10", "11": "Bölge 11"}
@@ -191,21 +191,31 @@ class Widget(QWidget):
         yardım.addWidget(yardım2)
         yardım_widget.setLayout(yardım)
 
+        aile_widget = QWidget()
+        aile = QHBoxLayout()
+        aile1 = QLabel("Aile büyüklüğü: ")
+        aile2 = QLineEdit()
+        self.aile = aile2
+        aile.addWidget(aile1)
+        aile.addWidget(aile2)
+        aile_widget.setLayout(aile)
+
+        yardım_aile = QWidget()
+        yardım_aile_layout = QHBoxLayout()
+        yardım_aile_layout.addWidget(yardım_widget)
+        yardım_aile_layout.addWidget(aile_widget)
+        yardım_aile.setLayout(yardım_aile_layout)
+
         self.ara = QPushButton("Filtrele")
         self.ara.clicked.connect(self.filtrele)
-
-        yardım_filtrele = QWidget()
-        yardım_filtrele_layout = QHBoxLayout()
-        yardım_filtrele_layout.addWidget(yardım_widget)
-        yardım_filtrele_layout.addWidget(self.ara)
-        yardım_filtrele.setLayout(yardım_filtrele_layout)
 
         filtrele_layout.addWidget(tc_isim)
         filtrele_layout.addWidget(soyisim_yaş)
         filtrele_layout.addWidget(telno_adres)
         filtrele_layout.addWidget(genel_bölge_ihtiyaç_sınıfı)
         filtrele_layout.addWidget(özel_durum_ihtiyaç_seviyesi)
-        filtrele_layout.addWidget(yardım_filtrele)
+        filtrele_layout.addWidget(yardım_aile)
+        filtrele_layout.addWidget(self.ara)
         filtrele.setLayout(filtrele_layout)
 
         #kişi ekle
@@ -377,24 +387,39 @@ class Widget(QWidget):
         yardım_ekle.addWidget(yardım2_ekle)
         yardım_ekle_widget.setLayout(yardım_ekle)
 
+        aile_ekle_widget = QWidget()
+        aile_ekle = QHBoxLayout()
+        aile1_ekle = QLabel("Aile büyüklüğü: ")
+        aile2_ekle = QLineEdit()
+        self.aile_ekle = aile2_ekle
+        aile_ekle.addWidget(aile1_ekle)
+        aile_ekle.addWidget(aile2_ekle)
+        aile_ekle_widget.setLayout(aile_ekle)
+
+        yardım_aile_ekle = QWidget()
+        yardım_aile_ekle_layout = QHBoxLayout()
+        yardım_aile_ekle_layout.addWidget(yardım_ekle_widget)
+        yardım_aile_ekle_layout.addWidget(aile_ekle_widget)
+        yardım_aile_ekle.setLayout(yardım_aile_ekle_layout)
+
         self.add = QPushButton("Ekle")
         self.drop = QPushButton("Çıkar")
         self.add.clicked.connect(self.ekle)
         self.drop.clicked.connect(self.çıkar)
 
-        yardım_ekle_çıkar = QWidget()
-        yardım_ekle_çıkar_layout = QHBoxLayout()
-        yardım_ekle_çıkar_layout.addWidget(yardım_ekle_widget)
-        yardım_ekle_çıkar_layout.addWidget(self.add)
-        yardım_ekle_çıkar_layout.addWidget(self.drop)
-        yardım_ekle_çıkar.setLayout(yardım_ekle_çıkar_layout)
+        ekle_çıkar = QWidget()
+        ekle_çıkar_layout = QHBoxLayout()
+        ekle_çıkar_layout.addWidget(self.add)
+        ekle_çıkar_layout.addWidget(self.drop)
+        ekle_çıkar.setLayout(ekle_çıkar_layout)
 
         ekle_layout.addWidget(tc_isim_ekle)
         ekle_layout.addWidget(soyisim_yaş_ekle)
         ekle_layout.addWidget(telno_adres_ekle)
         ekle_layout.addWidget(genel_bölge_ihtiyaç_sınıfı_ekle)
         ekle_layout.addWidget(özel_durum_ihtiyaç_seviyesi_ekle)
-        ekle_layout.addWidget(yardım_ekle_çıkar)
+        ekle_layout.addWidget(yardım_aile_ekle)
+        ekle_layout.addWidget(ekle_çıkar)
         ekle.setLayout(ekle_layout)
 
         #sonuçlar
@@ -439,7 +464,7 @@ class Widget(QWidget):
         self.criterias[0] = self.tc.text().lower()
         self.criterias[1] = self.isim.text().lower()
         self.criterias[2] = self.soyisim.text().lower()
-        self.criterias[3] = self.yaş.text().lower()
+        self.criterias[3] = self.yaş.text()
         self.criterias[4] = self.telno.text().lower()
         self.criterias[5] = self.adres.text().lower()
         self.criterias[6] = str(self.genel_bölge.currentIndex())
@@ -447,10 +472,11 @@ class Widget(QWidget):
         self.criterias[8] = str(self.özel_durum.currentIndex())
         self.criterias[9] = str(self.ihtiyaç_seviyesi.currentIndex())
         self.criterias[10] = str(self.yardım.currentIndex())
+        self.criterias[11] = self.aile.text()
         temp = list()
         for k in range(1, len(self.data)):
             temp.append(self.data[k].copy())
-        for k in range(11):
+        for k in range(12):
             if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0" or self.criterias[k] == "*":
                 continue
             elif k == 3 and "-" in self.criterias[3]:
@@ -462,6 +488,13 @@ class Widget(QWidget):
                     res = QMessageBox.information(self, "Hata!", "Yaş girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
             elif k == 6 and self.criterias[k] == "1":
                 temp = list(filter(lambda x: self.criterias[k] == x[k], temp))
+            elif k == 11 and "-" in self.criterias[11]:
+                try:
+                    field = self.criterias[11].split("-")
+                    field = list(range(int(field[0]), int(field[1]) + 1))
+                    temp = list(filter(lambda x: int(x[k]) in field, temp))
+                except:
+                    res = QMessageBox.information(self, "Hata!", "Aile girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
             else:
                 temp = list(filter(lambda x: self.criterias[k] in x[k], temp))
         self.tc.setText("")
@@ -474,6 +507,7 @@ class Widget(QWidget):
         self.özel_durum.setCurrentIndex(0)
         self.ihtiyaç_seviyesi.setCurrentIndex(0)
         self.yardım.setCurrentIndex(0)
+        self.aile.setText("")
         self.result = temp.copy()
         self.sonuç.setText(self.replacer(temp.copy()))
 
@@ -481,7 +515,7 @@ class Widget(QWidget):
         self.criterias[0] = self.tc_ekle.text().lower()
         self.criterias[1] = self.isim_ekle.text().lower()
         self.criterias[2] = self.soyisim_ekle.text().lower()
-        self.criterias[3] = self.yaş_ekle.text().lower()
+        self.criterias[3] = self.yaş_ekle.text()
         self.criterias[4] = self.telno_ekle.text().lower()
         self.criterias[5] = self.adres_ekle.text().lower()
         self.criterias[6] = str(self.genel_bölge_ekle.currentIndex())
@@ -489,11 +523,12 @@ class Widget(QWidget):
         self.criterias[8] = str(self.özel_durum_ekle.currentIndex())
         self.criterias[9] = str(self.ihtiyaç_seviyesi_ekle.currentIndex())
         self.criterias[10] = str(self.yardım_ekle.currentIndex())
+        self.criterias[11] = self.aile_ekle.text()
         temp = list()
         for k in range(1, len(self.data)):
             temp.append(self.data[k].copy())
 
-        for k in range(11):
+        for k in range(12):
             if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0":
                 continue
             elif k == 3 and "-" in self.criterias[3]:
@@ -505,6 +540,13 @@ class Widget(QWidget):
                     res = QMessageBox.information(self, "Hata!", "Yaş girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
             elif k == 6 and self.criterias[k] == "1":
                 temp = list(filter(lambda x: self.criterias[k] == x[k], temp))
+            elif k == 11 and "-" in self.criterias[11]:
+                try:
+                    field = self.criterias[11].split("-")
+                    field = list(range(int(field[0]), int(field[1]) + 1))
+                    temp = list(filter(lambda x: int(x[k]) in field, temp))
+                except:
+                    res = QMessageBox.information(self, "Hata!", "Aile girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
             else:
                 temp = list(filter(lambda x: self.criterias[k] in x[k], temp))
         self.tc_ekle.setText("")
@@ -517,6 +559,7 @@ class Widget(QWidget):
         self.özel_durum_ekle.setCurrentIndex(0)
         self.ihtiyaç_seviyesi_ekle.setCurrentIndex(0)
         self.yardım_ekle.setCurrentIndex(0)
+        self.aile_ekle.setText("")
         self.result = temp.copy()
 
 
@@ -525,7 +568,7 @@ class Widget(QWidget):
         self.criterias[0] = self.tc_ekle.text().lower()
         self.criterias[1] = self.isim_ekle.text().lower()
         self.criterias[2] = self.soyisim_ekle.text().lower()
-        self.criterias[3] = self.yaş_ekle.text().lower()
+        self.criterias[3] = self.yaş_ekle.text()
         self.criterias[4] = self.telno_ekle.text().lower()
         self.criterias[5] = self.adres_ekle.text().lower()
         self.criterias[6] = str(self.genel_bölge_ekle.currentIndex())
@@ -533,6 +576,7 @@ class Widget(QWidget):
         self.criterias[8] = str(self.özel_durum_ekle.currentIndex())
         self.criterias[9] = str(self.ihtiyaç_seviyesi_ekle.currentIndex())
         self.criterias[10] = str(self.yardım_ekle.currentIndex())
+        self.criterias[11] = self.aile_ekle.text()
         for k in self.criterias:
             if k == "" or k == None:
                 res = QMessageBox.information(self, "Eksik bilgi!", "Lütfen tüm alanları doldurduğunuzdan emin olunuz", QMessageBox.StandardButton.Ok)

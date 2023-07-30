@@ -1,4 +1,4 @@
-import csv, sys, time
+import csv, sys, time, openpyxl
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QWidget, \
     QVBoxLayout, QMessageBox, QTabWidget, QComboBox, QHBoxLayout, QLineEdit, QTextEdit
 
@@ -14,7 +14,7 @@ class Widget(QWidget):
         self.ihtiyaçSınıfı = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört", "5": "Beş", "6": "Altı", "7": "Yedi"}
         self.özelDurum = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört"}
         self.ihtiyaçSeviyesi = {"1": "En düşük", "2": "Düşük", "3": "Orta", "4": "Yüksek", "5": "En yüksek"}
-        self.yardımAlma = {"1": "Yardım alıyor", "2": "Yardım almıyor"}
+        self.yardımAlma = {"2": "Yardım alıyor", "1": "Yardım almıyor"}
         with open("database.csv", "r") as file:
             self.data = list(csv.reader(file))
 
@@ -428,7 +428,7 @@ class Widget(QWidget):
         sonuç_layout = QVBoxLayout()
         self.sonuç = QTextEdit()
         self.kaydet = QPushButton("Kaydet")
-        self.kaydet.clicked.connect(self.out)
+        self.kaydet.clicked.connect(self.excel_save)
         sonuç_layout.addWidget(self.sonuç)
         sonuç_layout.addWidget(self.kaydet)
         sonuç.setLayout(sonuç_layout)
@@ -509,8 +509,9 @@ class Widget(QWidget):
         self.ihtiyaç_seviyesi.setCurrentIndex(0)
         self.yardım.setCurrentIndex(0)
         self.aile.setText("")
-        self.result = temp.copy()
-        self.sonuç.setText(self.replacer(temp.copy()))
+        self.result = temp
+        self.sonuç.setText(self.replacer(temp))
+        res = QMessageBox.information(self, "Filtrelendi", f"{len(temp)} kişi bulundu.", QMessageBox.StandardButton.Ok)
 
     def filtrele2(self):
         self.criterias[0] = self.tc_ekle.text().lower()
@@ -630,6 +631,32 @@ class Widget(QWidget):
             res = QMessageBox.information(self, "Kaydedildi!", "Dosya başarıyla kaydedildi.", QMessageBox.StandardButton.Ok)
         except:
             res = QMessageBox.information(self, "Hata!", "Bir hata oluştu.", QMessageBox.StandardButton.Ok)
+
+    def excel_save(self):
+        liste = [["T.C. Kimlik No", "İsim", "Soyisim", "Yaş", "Tel No", "Adres", "Genel Bölge",
+                  "İhtiyaç Sınıfı", "Özel durum", "İhtiyaç Seviyesi", "Yardım alıyor mu?", "Aile Büyüklüğü"]]
+        #proper copying executed
+        for k in self.result:
+            liste.append(k.copy())
+        name = time.ctime().split(" ")
+        name = "_".join(name[1:4])
+        try:
+            wb = openpyxl.Workbook()
+            sheet = wb.active
+            for k in range(0, len(liste)):
+                # doing temp.copy() in the filtration does not change the fact that
+                #every element of temp is a list itself and they are not copied individually
+                #so any change on temp.copy() will affect temp itself, or vice versa.
+                #beware of this fact in future works
+                for l in range(0, len(liste[0])):
+                    c = sheet.cell(row=k+1, column=l+1)
+                    c.value = liste[k][l]
+            wb.save(f"{str(hash(str(time.time())))}_{name}.xlsx")
+            res = QMessageBox.information(self, "Kaydedildi!", "Dosya başarıyla kaydedildi.",
+                                          QMessageBox.StandardButton.Ok)
+        except:
+            res = QMessageBox.information(self, "Hata!", "Bir hata oluştu.", QMessageBox.StandardButton.Ok)
+
 
 
 

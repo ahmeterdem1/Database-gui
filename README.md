@@ -9,8 +9,8 @@ Basit database yönetimi
 Filtrelemek istediğiniz kriterleri uygun alanlara giriniz/seçiniz.
 Boş bırakırsanız veya "*" yazarsanız veya "Hiçbiri" seçeneğini seçerseniz
 ilgili kategoride filtreleme yapılmayacaktır. Filtreleme sonuçları "Çıktı"
-sekmesinde gözükecektir. Metin üzerinde düzenleme yapabilir, sonrasında da
-metni .txt uzantısıyla kaydedebilirsiniz.
+sekmesinde gözükecektir. Kaydedilecek metni oradan görebilir, excel olarak
+kaydedebilirsiniz.
 
 Yaş ve aile filtrelerken "-" sembolü ile boşluk bırakmadan bir aralık 
 girebilirsiniz.

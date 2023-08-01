@@ -1,13 +1,13 @@
 import csv, sys, time, openpyxl
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QWidget, \
-    QVBoxLayout, QMessageBox, QTabWidget, QComboBox, QHBoxLayout, QLineEdit, QTextEdit
+    QVBoxLayout, QMessageBox, QTabWidget, QComboBox, QHBoxLayout, QLineEdit, QTextEdit, QCheckBox
 
 class Widget(QWidget):
 
     def __init__(self):
         super().__init__()
         self.data = 0
-        self.criterias = [None] * 12
+        self.criterias = [None] * 13
         self.result = list()
         self.genelBölge = {"1": "Bölge 1", "2": "Bölge 2", "3": "Bölge 3", "4": "Bölge 4", "5": "Bölge 5", "6": "Bölge 6", "7": "Bölge 7",
                            "8": "Bölge 8", "9": "Bölge 9", "10": "Bölge 10", "11": "Bölge 11"}
@@ -15,6 +15,7 @@ class Widget(QWidget):
         self.özelDurum = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört"}
         self.ihtiyaçSeviyesi = {"1": "En düşük", "2": "Düşük", "3": "Orta", "4": "Yüksek", "5": "En yüksek"}
         self.yardımAlma = {"2": "Yardım alıyor", "1": "Yardım almıyor"}
+        self.çeşit = ["Gıda - Kıyafet", "Barınma", "Eğitim - Burs", "Sağlık", "Yaşlı - Engelli Bakım", "Kriz"]
         with open("database.csv", "r") as file:
             self.data = list(csv.reader(file))
 
@@ -206,6 +207,33 @@ class Widget(QWidget):
         yardım_aile_layout.addWidget(aile_widget)
         yardım_aile.setLayout(yardım_aile_layout)
 
+        çeşit_widget = QWidget()
+        çeşit = QHBoxLayout()
+        çeşit1 = QCheckBox("Gıda - Kıyafet")
+        çeşit1.toggled.connect(self.kontrol_unchecker)
+        çeşit2 = QCheckBox("Barınma")
+        çeşit2.toggled.connect(self.kontrol_unchecker)
+        çeşit3 = QCheckBox("Eğitim - Burs")
+        çeşit3.toggled.connect(self.kontrol_unchecker)
+        çeşit4 = QCheckBox("Sağlık")
+        çeşit4.toggled.connect(self.kontrol_unchecker)
+        çeşit5 = QCheckBox("Yaşlı - Engelli Bakım")
+        çeşit5.toggled.connect(self.kontrol_unchecker)
+        çeşit6 = QCheckBox("Kriz")
+        çeşit6.toggled.connect(self.kontrol_unchecker)
+        self.kontrol = QCheckBox("Hiçbiri")
+        self.kontrol.setChecked(1)
+        self.çeşit_list = [çeşit1, çeşit2, çeşit3, çeşit4, çeşit5, çeşit6]
+        çeşit.addWidget(çeşit1)
+        çeşit.addWidget(çeşit2)
+        çeşit.addWidget(çeşit3)
+        çeşit.addWidget(çeşit4)
+        çeşit.addWidget(çeşit5)
+        çeşit.addWidget(çeşit6)
+        çeşit.addWidget(self.kontrol)
+        self.kontrol.toggled.connect(self.unchecker)
+        çeşit_widget.setLayout(çeşit)
+
         self.ara = QPushButton("Filtrele")
         self.ara.clicked.connect(self.filtrele)
 
@@ -215,6 +243,7 @@ class Widget(QWidget):
         filtrele_layout.addWidget(genel_bölge_ihtiyaç_sınıfı)
         filtrele_layout.addWidget(özel_durum_ihtiyaç_seviyesi)
         filtrele_layout.addWidget(yardım_aile)
+        filtrele_layout.addWidget(çeşit_widget)
         filtrele_layout.addWidget(self.ara)
         filtrele.setLayout(filtrele_layout)
 
@@ -402,6 +431,33 @@ class Widget(QWidget):
         yardım_aile_ekle_layout.addWidget(aile_ekle_widget)
         yardım_aile_ekle.setLayout(yardım_aile_ekle_layout)
 
+        çeşit_ekle_widget = QWidget()
+        çeşit_ekle = QHBoxLayout()
+        çeşit1_ekle = QCheckBox("Gıda - Kıyafet")
+        çeşit1_ekle.toggled.connect(self.kontrol_unchecker_ekle)
+        çeşit2_ekle = QCheckBox("Barınma")
+        çeşit2_ekle.toggled.connect(self.kontrol_unchecker_ekle)
+        çeşit3_ekle = QCheckBox("Eğitim - Burs")
+        çeşit3_ekle.toggled.connect(self.kontrol_unchecker_ekle)
+        çeşit4_ekle = QCheckBox("Sağlık")
+        çeşit4_ekle.toggled.connect(self.kontrol_unchecker_ekle)
+        çeşit5_ekle = QCheckBox("Yaşlı - Engelli Bakım")
+        çeşit5_ekle.toggled.connect(self.kontrol_unchecker_ekle)
+        çeşit6_ekle = QCheckBox("Kriz")
+        çeşit6_ekle.toggled.connect(self.kontrol_unchecker_ekle)
+        self.kontrol_ekle = QCheckBox("Hiçbiri")
+        self.kontrol_ekle.setChecked(1)
+        self.çeşit_ekle_list = [çeşit1_ekle, çeşit2_ekle, çeşit3_ekle, çeşit4_ekle, çeşit5_ekle, çeşit6_ekle]
+        çeşit_ekle.addWidget(çeşit1_ekle)
+        çeşit_ekle.addWidget(çeşit2_ekle)
+        çeşit_ekle.addWidget(çeşit3_ekle)
+        çeşit_ekle.addWidget(çeşit4_ekle)
+        çeşit_ekle.addWidget(çeşit5_ekle)
+        çeşit_ekle.addWidget(çeşit6_ekle)
+        çeşit_ekle.addWidget(self.kontrol_ekle)
+        self.kontrol_ekle.toggled.connect(self.unchecker_ekle)
+        çeşit_ekle_widget.setLayout(çeşit_ekle)
+
         self.add = QPushButton("Ekle")
         self.drop = QPushButton("Çıkar")
         self.add.clicked.connect(self.ekle)
@@ -419,6 +475,7 @@ class Widget(QWidget):
         ekle_layout.addWidget(genel_bölge_ihtiyaç_sınıfı_ekle)
         ekle_layout.addWidget(özel_durum_ihtiyaç_seviyesi_ekle)
         ekle_layout.addWidget(yardım_aile_ekle)
+        ekle_layout.addWidget(çeşit_ekle_widget)
         ekle_layout.addWidget(ekle_çıkar)
         ekle.setLayout(ekle_layout)
 
@@ -456,11 +513,18 @@ class Widget(QWidget):
             k[8] = self.özelDurum[k[8]]
             k[9] = self.ihtiyaçSeviyesi[k[9]]
             k[10] = self.yardımAlma[k[10]]
+            s = bin(64 + int(k[12]))
+            temp = list()
+            for x in range(len(s) - 1, 2, -1):
+                if s[x] == "1":
+                    temp.append(self.çeşit[x - 3])
+            k[12] = " / ".join(temp)
             add = " ".join(k)
             text += (add + "\n")
         return text
 
     def filtrele(self):
+        bit = ""
         self.criterias[0] = self.tc.text().lower()
         self.criterias[1] = self.isim.text().lower()
         self.criterias[2] = self.soyisim.text().lower()
@@ -473,10 +537,16 @@ class Widget(QWidget):
         self.criterias[9] = str(self.ihtiyaç_seviyesi.currentIndex())
         self.criterias[10] = str(self.yardım.currentIndex())
         self.criterias[11] = self.aile.text()
+        for k in self.çeşit_list:
+            if k.isChecked():
+                bit += "1"
+            else:
+                bit += "0"
+        self.criterias[12] = int(bit, 2)
         temp = list()
         for k in range(1, len(self.data)):
             temp.append(self.data[k].copy())
-        for k in range(12):
+        for k in range(13):
             if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0" or self.criterias[k] == "*":
                 continue
             elif k == 3 and "-" in self.criterias[3]:
@@ -495,6 +565,10 @@ class Widget(QWidget):
                     temp = list(filter(lambda x: int(x[k]) in field, temp))
                 except:
                     res = QMessageBox.information(self, "Hata!", "Aile girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
+            elif k == 12 and not self.kontrol.isChecked():
+                temp = list(filter(lambda x: int(x[k]) - self.criterias[k] == 0, temp))
+            elif k == 12 and self.kontrol.isChecked():
+                continue
             else:
                 temp = list(filter(lambda x: self.criterias[k] in x[k], temp))
         self.tc.setText("")
@@ -509,11 +583,15 @@ class Widget(QWidget):
         self.ihtiyaç_seviyesi.setCurrentIndex(0)
         self.yardım.setCurrentIndex(0)
         self.aile.setText("")
+        for k in self.çeşit_list:
+            k.setChecked(0)
+        self.kontrol.setChecked(0)
         self.result = temp
         self.sonuç.setText(self.replacer(temp))
         res = QMessageBox.information(self, "Filtrelendi", f"{len(temp)} kişi bulundu.", QMessageBox.StandardButton.Ok)
 
     def filtrele2(self):
+        bit = ""
         self.criterias[0] = self.tc_ekle.text().lower()
         self.criterias[1] = self.isim_ekle.text().lower()
         self.criterias[2] = self.soyisim_ekle.text().lower()
@@ -526,11 +604,17 @@ class Widget(QWidget):
         self.criterias[9] = str(self.ihtiyaç_seviyesi_ekle.currentIndex())
         self.criterias[10] = str(self.yardım_ekle.currentIndex())
         self.criterias[11] = self.aile_ekle.text()
+        for k in self.çeşit_ekle_list:
+            if k.isChecked():
+                bit += "1"
+            else:
+                bit += "0"
+        self.criterias[12] = int(bit, 2)
         temp = list()
         for k in range(1, len(self.data)):
             temp.append(self.data[k].copy())
 
-        for k in range(12):
+        for k in range(13):
             if self.criterias[k] == "" or self.criterias[k] == None or self.criterias[k] == "0":
                 continue
             elif k == 3 and "-" in self.criterias[3]:
@@ -549,6 +633,10 @@ class Widget(QWidget):
                     temp = list(filter(lambda x: int(x[k]) in field, temp))
                 except:
                     res = QMessageBox.information(self, "Hata!", "Aile girdisinde hata oluştu.", QMessageBox.StandardButton.Ok)
+            elif k == 12 and not self.kontrol_ekle.isChecked():
+                temp = list(filter(lambda x: int(x[k]) - self.criterias[k] == 0, temp))
+            elif k == 12 and self.kontrol_ekle.isChecked():
+                continue
             else:
                 temp = list(filter(lambda x: self.criterias[k] in x[k], temp))
         self.tc_ekle.setText("")
@@ -563,11 +651,15 @@ class Widget(QWidget):
         self.ihtiyaç_seviyesi_ekle.setCurrentIndex(0)
         self.yardım_ekle.setCurrentIndex(0)
         self.aile_ekle.setText("")
+        for k in self.çeşit_ekle_list:
+            k.setChecked(0)
+        self.kontrol_ekle.setChecked(0)
         self.result = temp.copy()
 
 
     def ekle(self):
         check = True
+        bit = ""
         self.criterias[0] = self.tc_ekle.text().lower()
         self.criterias[1] = self.isim_ekle.text().lower()
         self.criterias[2] = self.soyisim_ekle.text().lower()
@@ -580,6 +672,16 @@ class Widget(QWidget):
         self.criterias[9] = str(self.ihtiyaç_seviyesi_ekle.currentIndex())
         self.criterias[10] = str(self.yardım_ekle.currentIndex())
         self.criterias[11] = self.aile_ekle.text()
+        if not self.kontrol_ekle.isChecked():
+            for k in self.çeşit_ekle_list:
+                if k.isChecked():
+                    bit += "1"
+                else:
+                    bit += "0"
+            self.criterias[12] = str(int(bit, 2))
+        else:
+            self.criterias[12] = "0"
+
         for k in self.criterias:
             if k == "" or k == None:
                 res = QMessageBox.information(self, "Eksik bilgi!", "Lütfen tüm alanları doldurduğunuzdan emin olunuz", QMessageBox.StandardButton.Ok)
@@ -589,7 +691,7 @@ class Widget(QWidget):
             try:
                 with open("database.csv", "a") as file:
                     file.write("\n")
-                    string = ",".join(self.criterias.copy())
+                    string = ",".join(self.criterias)
                     file.write(string)
                     self.data.append(self.criterias)
                 res = QMessageBox.information(self, "Eklendi", "Kişi listeye eklendi.", QMessageBox.StandardButton.Ok)
@@ -634,7 +736,7 @@ class Widget(QWidget):
 
     def excel_save(self):
         liste = [["T.C. Kimlik No", "İsim", "Soyisim", "Yaş", "Tel No", "Adres", "Genel Bölge",
-                  "İhtiyaç Sınıfı", "Özel durum", "İhtiyaç Seviyesi", "Yardım alıyor mu?", "Aile Büyüklüğü"]]
+                  "İhtiyaç Sınıfı", "Özel durum", "İhtiyaç Seviyesi", "Yardım alıyor mu?", "Aile Büyüklüğü", "Yardım Çeşidi"]]
         #proper copying executed
         for k in self.result:
             liste.append(k.copy())
@@ -656,6 +758,21 @@ class Widget(QWidget):
                                           QMessageBox.StandardButton.Ok)
         except:
             res = QMessageBox.information(self, "Hata!", "Bir hata oluştu.", QMessageBox.StandardButton.Ok)
+
+    def unchecker(self):
+        for k in self.çeşit_list:
+            k.setChecked(0)
+
+    def unchecker_ekle(self):
+        for k in self.çeşit_ekle_list:
+            k.setChecked(0)
+
+    def kontrol_unchecker(self):
+        self.kontrol.setChecked(0)
+
+    def kontrol_unchecker_ekle(self):
+        self.kontrol_ekle.setChecked(0)
+
 
 
 

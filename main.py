@@ -9,12 +9,13 @@ class Widget(QWidget):
         self.data = 0
         self.criterias = [None] * 13
         self.result = list()
+        self.result_asıl = list()
         self.genelBölge = {"1": "Bölge 1", "2": "Bölge 2", "3": "Bölge 3", "4": "Bölge 4", "5": "Bölge 5", "6": "Bölge 6", "7": "Bölge 7",
-                           "8": "Bölge 8", "9": "Bölge 9", "10": "Bölge 10", "11": "Bölge 11"}
-        self.ihtiyaçSınıfı = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört", "5": "Beş", "6": "Altı", "7": "Yedi"}
-        self.özelDurum = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört"}
-        self.ihtiyaçSeviyesi = {"1": "En düşük", "2": "Düşük", "3": "Orta", "4": "Yüksek", "5": "En yüksek"}
-        self.yardımAlma = {"2": "Yardım alıyor", "1": "Yardım almıyor"}
+                           "8": "Bölge 8", "9": "Bölge 9", "10": "Bölge 10", "11": "Bölge 11", "0": ""}
+        self.ihtiyaçSınıfı = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört", "5": "Beş", "6": "Altı", "7": "Yedi", "0": ""}
+        self.özelDurum = {"1": "Bir", "2": "İki", "3": "Üç", "4": "Dört", "5": "Beş", "0": ""}
+        self.ihtiyaçSeviyesi = {"1": "En düşük", "2": "Düşük", "3": "Orta", "4": "Yüksek", "5": "En yüksek", "0": ""}
+        self.yardımAlma = {"2": "Yardım alıyor", "1": "Yardım almıyor", "0": ""}
         self.çeşit = ["Gıda - Kıyafet", "Barınma", "Eğitim - Burs", "Sağlık", "Yaşlı - Engelli Bakım", "Kriz"]
         with open("database.csv", "r") as file:
             self.data = list(csv.reader(file))
@@ -544,6 +545,7 @@ class Widget(QWidget):
                 bit += "0"
         self.criterias[12] = int(bit, 2)
         temp = list()
+        print(self.data)
         for k in range(1, len(self.data)):
             temp.append(self.data[k].copy())
         for k in range(13):
@@ -585,8 +587,9 @@ class Widget(QWidget):
         self.aile.setText("")
         for k in self.çeşit_list:
             k.setChecked(0)
-        self.kontrol.setChecked(0)
+        self.kontrol.setChecked(1)
         self.result = temp
+        self.result_asıl = temp
         self.sonuç.setText(self.replacer(temp))
         res = QMessageBox.information(self, "Filtrelendi", f"{len(temp)} kişi bulundu.", QMessageBox.StandardButton.Ok)
 
@@ -693,7 +696,7 @@ class Widget(QWidget):
                     file.write("\n")
                     string = ",".join(self.criterias)
                     file.write(string)
-                    self.data.append(self.criterias)
+                    self.data.append(self.criterias.copy())
                 res = QMessageBox.information(self, "Eklendi", "Kişi listeye eklendi.", QMessageBox.StandardButton.Ok)
             except:
                 res = QMessageBox.information(self, "Hata!", "Bir hata oluştu.", QMessageBox.StandardButton.Ok)
@@ -738,7 +741,7 @@ class Widget(QWidget):
         liste = [["T.C. Kimlik No", "İsim", "Soyisim", "Yaş", "Tel No", "Adres", "Genel Bölge",
                   "İhtiyaç Sınıfı", "Özel durum", "İhtiyaç Seviyesi", "Yardım alıyor mu?", "Aile Büyüklüğü", "Yardım Çeşidi"]]
         #proper copying executed
-        for k in self.result:
+        for k in self.result_asıl:
             liste.append(k.copy())
         name = time.ctime().split(" ")
         name = "_".join(name[1:4])
